@@ -57,18 +57,18 @@ def compute_dct (matrix: np.ndarray) -> np.ndarray:
 
 def compute_dct_orth (matrix: np.ndarray) -> np.ndarray:
 	if matrix.shape != (8, 8):
-		raise RuntimeErrpr ("Unsupported matrix dimensions, must be 8x8!")
+		raise RuntimeError ("Unsupported matrix dimensions, must be 8x8!")
 	
 	return C_II_8 @ matrix @ C_III_8
 
 def compute_idct (matrix: np.ndarray) -> np.ndarray:
 	if matrix.shape != (8, 8):
-		raise RuntimeErrpr ("Unsupported matrix dimensions, must be 8x8!")
+		raise RuntimeError ("Unsupported matrix dimensions, must be 8x8!")
 	
 	return vector_to_matrix (IDCT_KRON_8 @ matrix_to_vector (matrix))
 
 def compute_idct_orth (matrix: np.ndarray) -> np.ndarray:
 	if matrix.shape != (8, 8):
-		raise RuntimeErrpr ("Unsupported matrix dimensions, must be 8x8!")
+		raise RuntimeError ("Unsupported matrix dimensions, must be 8x8!")
 	
 	return C_III_8 @ matrix @ C_II_8

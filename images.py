@@ -8,7 +8,7 @@ from collections.abc import Callable
 
 def image_to_matrix (patch: Image) -> np.ndarray:
 	if patch.size != (8, 8):
-		raise RuntimeException ("Image patch has unsupported dimensions")
+		raise RuntimeError ("Image patch has unsupported dimensions")
 	return np.array (patch.getdata ()).reshape ((8, 8))
 
 def compute_dct (patch: Image) -> np.ndarray:
