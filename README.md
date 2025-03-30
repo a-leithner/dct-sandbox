@@ -2,7 +2,8 @@
 
 This repository compiles some Python snippets created while working on my Bachelor's
 thesis in Mathematics on the discrete cosine transform (DCT). They are by no means
-optimized and are intended for illustrative purposes only.
+optimised (e.g., they don't exploit the FFT) and are intended for illustrative
+purposes only.
 
 An overview of the included modules is given below. Where image files are to be taken
 as an input, they ***MUST*** be in PGM (portable graymap) format and ***MUST*** have
