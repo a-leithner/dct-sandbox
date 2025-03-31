@@ -6,30 +6,48 @@ optimised (e.g., they don't exploit the FFT) and are intended for illustrative
 purposes only.
 
 An overview of the included modules is given below. Where image files are to be taken
-as an input, they ***MUST*** be in PGM (portable graymap) format and ***MUST*** have
-widths and heights divisible by 8. See the example images in `images/` for reference.
+as an input, they ***MUST*** be in [PGM (portable graymap) format](https://en.wikipedia.org/wiki/Netpbm#File_formats)
+and ***MUST*** have widths and heights divisible by 8. See the example images in
+`images/` for reference.
+
+Converting an image to PGM is as simple as running [ImageMagick](https://imagemagick.org)
+against it:
+```shell
+magick input.jpg output.pgm
+```
+where `input.jpg` is the input file (in any of the formats supported by ImageMagick)
+and `output.pgm` is the file to write to.
+
+The reference images in `images/` have been scaled using ImageMagick, too:
+```shell
+magick image.pgm -sharpen 0x1.2 -resize 25\% -quality 95 output.pgm
+```
 
 ## Prerequisites
 
-Make sure to have Pillow (a fork of PIL), numpy, and Matplotlib installed. Any fairly
-recent version should suffice. Modules will only run on Python 3 (tested with
-Python 3.13.2).
+Make sure to have Pillow (a fork of PIL), NumPy, and Matplotlib installed. Any fairly
+recent version should suffice. Modules will only run on Python 3. All scripts and
+modules have been tested to work with the following versions:
+  * Python 3.13.2
+  * Pillow 11.1.0
+  * NumPy 2.2.2
+  * Matplotlib 3.10.1
 
 ## Modules
 
 ### `dct.py`
 
 The main file is `dct.py`, providing all necessary definitions to apply the DCT to
-a numpy vector or matrix. DCT-I through DCT-IV are supported for any dimension
+a NumPy vector or matrix. DCT-I through DCT-IV are supported for any dimension
 greater than or equal to 1. This module provides the methods `make_C_x(n)`, where `x`
 is any of the flavours `I`, `II`, `III`, or `IV`, which generate the DCT matrix of
 dimension `n x n` with orthonormal normalisation factor.
 
-To apply the DCT to a numpy vector, use `make_C_x (n) @ v`, where `x` is the desired
+To apply the DCT to a NumPy vector, use `make_C_x (n) @ v`, where `x` is the desired
 variant, `n` the desired dimension and `v` the vector to transform. If you're working
 with 8x8 matrices, you may use `compute_dct` or `compute_dct_orth` for the DCT-II
 directly (the former computing the transform by means of a Kronecker product, the
-latter as a similarity transform), or `compute_idct` or `compute_idct_orth` for the
+latter as a similarity transform), and `compute_idct` or `compute_idct_orth` for the
 DCT-III (inverse of the DCT-II).
 
 ### `averages.py`
