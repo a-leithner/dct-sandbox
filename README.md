@@ -75,6 +75,7 @@ Three patterns for removing coefficients are available:
   * `diag` only applies a mask to those coefficients above the antidiagonal of the
     coefficient matrix, enumerating one row after the other. Maximum: 32 coefficients.
   * `1q` applies only to the top left quadrant of the matrix. Maximum: 16 coefficients.
+
 Any pattern only keeps the first `x` coefficients as specified upon invocation.
 
 Usage:
