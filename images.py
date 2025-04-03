@@ -69,10 +69,9 @@ def num_to_bytes (num: int) -> list:
 	PGM files are written correctly.
 	
 	:num:     The number to convert
-	:returns: The number as a list of bytes
+	:returns: The number as a list of bytes (big-endian)
 	"""
-	if num == 0: return [0, 0]
-	elif num <= 255: return [0, num]
+	if num <= 255: return [0, num]
 	else: return [(num & 0xFF00) >> 8, num & 0xFF]
 
 def write_pgm (filename: str, data: np.ndarray) -> None:
