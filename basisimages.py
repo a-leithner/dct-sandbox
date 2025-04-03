@@ -2,6 +2,7 @@ import numpy as np
 import dct
 import images
 
+# Generates the standard basis of R^(8x8)
 def Delta (k: int, l: int) -> np.ndarray:
 	m = np.zeros ((8, 8))
 	m [k, l] = 1

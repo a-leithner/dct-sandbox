@@ -49,6 +49,11 @@ def vector_to_matrix (v: np.ndarray) -> np.ndarray:
 	
 	return v.reshape ((d, d))
 
+# compute_* methods apply the DCT via matrix-vector-product with the Kronecker
+# product of two copies of the same C_* matrix.
+#
+# compute_*_orth methods are more straight forward; they apply the DCT
+# as a similarity transform, i.e. C_* @ m @ C_*.T
 def compute_dct (matrix: np.ndarray) -> np.ndarray:
 	if matrix.shape != (8, 8):
 		raise RuntimeError ("Unsupported matrix dimensions, must be 8x8!")
