@@ -118,8 +118,9 @@ Signature:
 def chebyshev_transform (f: Callable [[np.float64], np.float64], n: int) -> np.array:
 ```
 
-Computes the DCT-I of the output of `ccquad.chebyshev_sample`. Used in `ccquad.integrate`
-and `ccquad.chebyshev_interpolation`.
+Computes the DCT-I of the output of [`ccquad.chebyshev_sample`](#ccquadchebyshev_sample).
+Used in [`ccquad.integrate`](#ccquadintegrate) and
+[`ccquad.chebyshev_interpolation`](#ccquadchebyshev_interpolation).
 
 #### `ccquad.chebyshev_extrema`
 
@@ -130,7 +131,8 @@ def chebyshev_extrema (n: int) -> np.ndarray:
 
 Computes the extrema of the Chebyshev polynomial of the first kind of order `n`
 and returns them in a NumPy array. As stated above, these extrema are the points
-$`\cos(k\pi/n)`$ for $`0\leq k\leq n`$. Used in `ccquad.chebyshev_sample`.
+$`\cos(k\pi/n)`$ for $`0\leq k\leq n`$. Used in
+[`ccquad.chebyshev_sample`](#ccquadchebyshev_sample).
 
 ### `averages.py`
 
