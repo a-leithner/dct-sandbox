@@ -8,7 +8,7 @@ LAMN = lambda k, n: INVSQRT2 if k in [0, n] else 1
 
 def make_C_I (n: int) -> np.ndarray:
 	return np.array ([
-		[ SQRT2 * LAMN (k, n) * LAM (l, n) * np.cos ((np.pi * k * l) / n) for l in range (n + 1) ] for k in range (n + 1)
+		[ SQRT2 * LAMN (k, n) * LAMN (l, n) * np.cos ((np.pi * k * l) / n) for l in range (n + 1) ] for k in range (n + 1)
 	])
 
 def make_C_II (n: int) -> np.ndarray:
