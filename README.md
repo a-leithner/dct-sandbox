@@ -50,6 +50,88 @@ directly (the former computing the transform by means of a Kronecker product, th
 latter as a similarity transform), and `compute_idct` or `compute_idct_orth` for the
 DCT-III (inverse of the DCT-II).
 
+Module only, provides no CLI.
+
+### `ccquad.py`
+
+`ccquad.py` is a module implementing
+[Clenshaw–Curtis quadrature](https://en.wikipedia.org/wiki/Clenshaw%E2%80%93Curtis_quadrature)
+using NumPy and `dct.py` as well as adjacent functions. Clenshaw–Curtis works by
+interpolating the function which is to be integrated using
+[Chebyshev polynomials](https://en.wikipedia.org/wiki/Chebyshev_polynomials) of the
+first kind up to degree $n$ such that the interpolation is exact at the extrema of the
+$n$-th Chebyshev polynomials.
+
+This quadrature always calculates $`\int_{-1}^1 f(x)\,\mathrm{d}x`$; it may be
+necessary/possible to scale your function to integrate over an arbitrary interval.
+
+The module provides no CLI but the following functions:
+
+#### `ccquad.integrate`
+
+Signature:  
+```python
+def integrate (f: Callable[[np.float64], np.float64], n: int) -> np.float64:
+```
+
+Computes $`\int_{-1}^1 f(x)\,\mathrm{d}x`$. Here, `f` is the function to be
+integrated, which must have domain at least $`[-1, 1]`$, and `n` is the order
+of integration, i.e. the order of the highest Chebyshev polynomial to be used
+in the interpolation.
+
+If `f` is a polynomial and `n` fulfills $`n\leq\deg f`$, the integration result
+will be exact (numerical inaccuracies not withstanding).
+
+#### `ccquad.chebyshev_interpolation`
+
+Signature:  
+```python
+def chebyshev_interpolation (f: Callable[[np.float64], np.float64], n: int) -> Callable[[np.float64], np.float64]:
+```
+
+Returns a callable taking one input `x` returning the value of the Chebyshev
+interpolation polynomial at `x`. Here, `f` is the function to be interpolated,
+which must have domain at least $`[-1, 1]`$, and `n` is the order of interpolation,
+i.e. the degree of the last Chebyshev polynomial to use.
+
+The returned callable with compute the value of `f` exactly at the Chebyshev
+extrema of order `n`, that is, at $`\cos(k\pi/n)`$ for $`0\leq k\leq n`$,
+numerical inaccuracies not withstanding.
+
+#### `ccquad.chebyshev_sample`
+
+Signature:  
+```python
+def chebyshev_sample (f: Callable [[np.float64], np.float64], n: int) -> np.array:
+```
+
+Samples the callable `f` at the Chebyshev extrema of order `n`, i.e. at the points
+$`\cos(k\pi/n)`$ for $`0\leq k\leq n`$, and returns the results in a NumPy array.
+Note that the first and last entry will be multiplied by $`1/\sqrt{2}`$ to achieve
+correct normalisation when used as an input to DCT-I (as is the case in all functions
+calling this function from within `ccquad.py`).
+
+#### `ccquad.chebyshev_transform`
+
+Signature:  
+```python
+def chebyshev_transform (f: Callable [[np.float64], np.float64], n: int) -> np.array:
+```
+
+Computes the DCT-I of the output of `ccquad.chebyshev_sample`. Used in `ccquad.integrate`
+and `ccquad.chebyshev_interpolation`.
+
+#### `ccquad.chebyshev_extrema`
+
+Signature:  
+```python
+def chebyshev_extrema (n: int) -> np.ndarray:
+```
+
+Computes the extrema of the Chebyshev polynomial of the first kind of order `n`
+and returns them in a NumPy array. As stated above, these extrema are the points
+$`\cos(k\pi/n)`$ for $`0\leq k\leq n`$. Used in `ccquad.chebyshev_sample`.
+
 ### `averages.py`
 
 This module calculates the average DCT-II coefficient matrix of all 8x8 blocks
@@ -147,6 +229,7 @@ Provides a method to display the absolute values of a given matrix as a Matplotl
 image with a fixed colour bar, fixed colour scheme, and fixed scale. Also draws
 a dashed line between the four quadrants of 8x8 matrices.
 
+Provides no CLI.
 
 ## Copyright
 
