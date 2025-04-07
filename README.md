@@ -56,14 +56,14 @@ Module only, provides no CLI.
 
 `ccquad.py` is a module implementing
 [Clenshaw–Curtis quadrature](https://en.wikipedia.org/wiki/Clenshaw%E2%80%93Curtis_quadrature)
-using NumPy and `dct.py` as well as adjacent functions. Clenshaw–Curtis works by
+and adjacent functions using NumPy and `dct.py`. Clenshaw–Curtis works by
 interpolating the function which is to be integrated using
 [Chebyshev polynomials](https://en.wikipedia.org/wiki/Chebyshev_polynomials) of the
 first kind up to degree $n$ such that the interpolation is exact at the extrema of the
-$n$-th Chebyshev polynomials.
+$n$-th Chebyshev polynomials and then integrating this interpolation.
 
 This quadrature always calculates $`\int_{-1}^1 f(x)\,\mathrm{d}x`$; it may be
-necessary/possible to scale your function to integrate over an arbitrary interval.
+necessary to scale your function to integrate over an arbitrary interval.
 
 The module provides no CLI but the following functions:
 
@@ -79,7 +79,7 @@ integrated, which must have domain at least $`[-1, 1]`$, and `n` is the order
 of integration, i.e. the order of the highest Chebyshev polynomial to be used
 in the interpolation.
 
-If `f` is a polynomial and `n` fulfills $`n\leq\deg f`$, the integration result
+If `f` is a polynomial and `n` fulfills $`n\geq\deg f`$, the integration result
 will be exact (numerical inaccuracies not withstanding).
 
 #### `ccquad.chebyshev_interpolation`
@@ -94,7 +94,7 @@ interpolation polynomial at `x`. Here, `f` is the function to be interpolated,
 which must have domain at least $`[-1, 1]`$, and `n` is the order of interpolation,
 i.e. the degree of the last Chebyshev polynomial to use.
 
-The returned callable with compute the value of `f` exactly at the Chebyshev
+The returned callable will compute the value of `f` exactly at the Chebyshev
 extrema of order `n`, that is, at $`\cos(k\pi/n)`$ for $`0\leq k\leq n`$,
 numerical inaccuracies not withstanding.
 
