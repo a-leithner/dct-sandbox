@@ -1,6 +1,7 @@
 import numpy as np
 import dct
 import images
+import plots
 
 import sys
 import os
@@ -57,10 +58,18 @@ def make_mask_1q (keep: int) -> np.ndarray:
 	mask [0:4,0:4] = np.array (submask).reshape ((4, 4))
 	return ~mask
 
+display_only = False
+if "--display" in sys.argv:
+	display_only = True
+	sys.argv.remove ("--display")
+
 if len (sys.argv) not in [3, 4]:
-	print ("Usage: python3 reduce.py coeffs [pattern] file")
+	print ("Usage: python3 reduce.py coeffs [pattern] file [--display]")
 	print ()
 	print ("Reduces a given image file in quality by means of discarding DCT coefficients.")
+	print ()
+	print ("Options:")
+	print (" --display Only display the generated image in a Matplotlib window; don't save it")
 	print ()
 	print ("Arguments:")
 	print (" coeffs    The number of DCT coefficients to keep")
@@ -148,7 +157,10 @@ with open (filename, "rb") as f:
 			index += 1
 			print (f"{index} of {patches}\r", end="", flush=True)
 	
-	# Write the resulting reduced image
-	images.write_pgm (target, newim)
+	if not display_only:
+		# Write the resulting reduced image
+		images.write_pgm (target, newim)
+	else:
+		plots.display_image (newim)
 
 
