@@ -53,7 +53,7 @@ DCT-III (inverse of the DCT-II).
 If `M` is an 8x8 NumPy matrix, calling `dct.compute_dct (M)` or `dct.compute_dct_orth (M)`
 will be equivalent to `scipy.fft.dctn (M, norm="ortho")`, and calling
 `dct.compute_idct (M)` or `dct.compute_idct_orth (M)` will be equivalent to
-`scipy.fft.idctn (M, norm="ortho")`, numerical inaccuracies not withstanding.
+`scipy.fft.idctn (M, norm="ortho")`, numerical inaccuracies notwithstanding.
 
 Module only, provides no CLI.
 
@@ -85,7 +85,7 @@ of integration, i.e. the order of the highest Chebyshev polynomial to be used
 in the interpolation.
 
 If `f` is a polynomial and `n` fulfills $`n\geq\deg f`$, the integration result
-will be exact (numerical inaccuracies not withstanding).
+will be exact (numerical inaccuracies notwithstanding).
 
 #### `ccquad.chebyshev_interpolation`
 
@@ -101,7 +101,7 @@ i.e. the degree of the last Chebyshev polynomial to use.
 
 The returned callable will compute the value of `f` exactly at the Chebyshev
 extrema of order `n`, that is, at $`\cos(k\pi/n)`$ for $`0\leq k\leq n`$,
-numerical inaccuracies not withstanding.
+numerical inaccuracies notwithstanding.
 
 #### `ccquad.chebyshev_sample`
 
@@ -248,10 +248,10 @@ Provides methods for calculating the [Fourier matrices](https://en.wikipedia.org
 and for applying the DFT to arbitrary NumPy matrices (which must be square).
 To compute the DFT of a matrix `M`, call `dft.compute_dft (M)`. This will be
 equivalent to `np.fft.fft2 (M, norm="forward")` (numerical inaccuracies
-not withstanding). To compute the IDFT of a matrix `D`, e.g. to transform
+notwithstanding). To compute the IDFT of a matrix `D`, e.g. to transform
 a DFT-transformed matrix back to its original form, call `dft.compute_idft (D)`.
 This will be equivalent to `np.fft.ifft2 (D, norm="forward")` (numerical
-inaccuracies not withstanding).
+inaccuracies notwithstanding).
 
 Provides no CLI.
 
