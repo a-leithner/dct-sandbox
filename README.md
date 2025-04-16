@@ -136,9 +136,9 @@ $`\cos(k\pi/n)`$ for $`0\leq k\leq n`$. Used in
 
 ### `averages.py`
 
-This module calculates the average DCT-II coefficient matrix of all 8x8 blocks
-over a given set of images and displays the magnitudes of this average matrix
-as a Matplotlib image.
+This module calculates the average DCT-II and DFT coefficient matrices of all
+8x8 blocks over a given set of images and displays the magnitudes of these
+average matrices as Matplotlib images, DFT first, DCT-II second.
 
 To compute the average matrix of a single image file, use
 ```shell
@@ -162,7 +162,11 @@ Three patterns for removing coefficients are available:
 
 Any pattern only keeps the first `x` coefficients as specified upon invocation.
 
-Usage:
+When called with `--display`, this module will only display the generated
+reduced image in a Matplotlib window and will not save it. This option is
+not positional, meaning it may be positioned anywhere in the commandline.
+
+Usage:  
 ```shell
 python3 reduce.py coeffs [pattern] file
 ```
@@ -230,6 +234,19 @@ Provides no CLI.
 Provides a method to display the absolute values of a given matrix as a Matplotlib
 image with a fixed colour bar, fixed colour scheme, and fixed scale. Also draws
 a dashed line between the four quadrants of 8x8 matrices.
+
+Provides no CLI.
+
+### `dft.py`
+
+Provides methods for calculating the [Fourier matrices](https://en.wikipedia.org/wiki/DFT_matrix)
+and for applying the DFT to arbitrary NumPy matrices (which must be square).
+To compute the DFT of a matrix `M`, call `dft.compute_dft (M)`. This will be
+equivalent to `np.fft.fft2 (M, norm="forward")` (numerical inaccuracies
+not withstanding). To compute the IDFT of a matrix `D`, e.g. to transform
+a DFT-transformed matrix back to its original form, call `dft.compute_idft (D)`.
+This will be equivalent to `np.fft.ifft2 (D, norm="forward")` (numerical
+inaccuracies not withstanding).
 
 Provides no CLI.
 
