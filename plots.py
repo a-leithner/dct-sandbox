@@ -21,3 +21,14 @@ def plot_dct_coefficients (matrix: np.ndarray) -> None:
 	ax.axvline (3.5, linestyle='--', color="k")
 	
 	plt.show()
+
+def display_image (image: np.ndarray) -> None:
+	"""
+	Unified function to display a black-and-white image
+	
+	:matrix: The image matrix to display
+	"""
+	plt.gray ()
+	plt.axis ("off")
+	plt.imshow (image, vmin=0)
+	plt.show ()
