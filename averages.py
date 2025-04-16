@@ -3,15 +3,15 @@ import images
 import plots
 
 import sys
-import os
 
 from PIL import Image
 
-coeff_total = np.zeros ((8, 8))
+dct_coeff_total = np.zeros ((8, 8))
+dft_coeff_total = np.zeros ((8, 8))
 patches_total = 0
 
 def image_action (width: int, height: int, im: Image) -> None:
-	global coeff_total
+	global dct_coeff_total, dft_coeff_total
 	global patches_total
 	
 	patches_h = width // 8
@@ -28,10 +28,14 @@ def image_action (width: int, height: int, im: Image) -> None:
 			top_left = (h_index * 8, v_index * 8)
 			bottom_right = (top_left[0] + 8, top_left[1] + 8)
 			
-			# Extract the processed patch, process, and store DCT coefficients
+			# Extract the processed patch, process, and store DFT and DCT coefficients
 			patch = im.crop ((*top_left, *bottom_right))
-			dct_coeffs = images.compute_dct (patch)
-			coeff_total += dct_coeffs
+			
+			dft_coeffs = images.compute_dft (patch)
+			dft_coeff_total += np.abs(dft_coeffs)
+			
+			dct_coeffs = images.compute_dct_orth (patch)
+			dct_coeff_total += dct_coeffs
 			
 			index += 1
 			print (f"{index} of {patches}\r", end="", flush=True)
@@ -47,16 +51,24 @@ if patches_total == 0:
 	print ("No patches processed")
 	sys.exit ()
 
-coeff_total /= patches_total
+dft_coeff_total /= patches_total
+dct_coeff_total /= patches_total
+print ()
+print ("Average DFT coefficient matrix (absolute values):")
+print (dft_coeff_total)
 print ()
 print ("Average DCT-II coefficient matrix:")
-print (coeff_total)
+print (dct_coeff_total)
 print ()
-print ("Average DCT-II coefficient matrix (reduced precision):")
 with np.printoptions (precision=3, suppress=True):
-	print (coeff_total)
+	print ("Average DFT coefficient matrix (reduced precision):")
+	print (dft_coeff_total)
+	print ()
+	print ("Average DCT-II coefficient matrix (reduced precision):")
+	print (dct_coeff_total)
 print ()
 print (f"Total patches: {patches_total}")
 
-# Opens in a Matplotlib window
-plots.plot_dct_coefficients (coeff_total)
+# Open in Matplotlib windows
+plots.plot_dct_coefficients (dft_coeff_total)
+plots.plot_dct_coefficients (dct_coeff_total)
