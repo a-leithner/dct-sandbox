@@ -2,12 +2,12 @@ import numpy as np
 from math import isqrt
 
 SQRT2 = np.sqrt(2)
-INVSQRT2 = 1/SQRT2
+INVSQRT2 = 1 / SQRT2
 LAM = lambda k: INVSQRT2 if k == 0 else 1
 LAMN = lambda k, n: INVSQRT2 if k in [0, n] else 1
 
 def make_C_I (n: int) -> np.ndarray:
-    norm = SQRT2 / np.sqrt (n)
+	norm = SQRT2 / np.sqrt (n)
 	return np.array ([
 		[ norm * LAMN (k, n) * LAMN (l, n) * np.cos ((np.pi * k * l) / n) for l in range (n + 1) ] for k in range (n + 1)
 	])
@@ -27,7 +27,7 @@ def make_C_III (n: int) -> np.ndarray:
 def make_C_IV (n: int) -> np.ndarray:
 	norm = SQRT2 / np.sqrt (n)
 	return np.array ([
-		[ norm * cos (np.pi * (k + 0.5) * (l + 0.5) / n) for l in range (n) ] for k in range (n)
+		[ norm * np.cos (np.pi * (k + 0.5) * (l + 0.5) / n) for l in range (n) ] for k in range (n)
 	])
 
 C_II_8 = make_C_II (8)
