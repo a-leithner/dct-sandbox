@@ -205,7 +205,7 @@ Usage:
 python3 basisimages.py
 ```
 
-### `cropy.py`
+### `crop.py`
 
 Crops an image such that its width and height both are multiples of 8. This will
 keep the largest possible rectangle whose top-left corner coincides with the top-left
