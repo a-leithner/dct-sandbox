@@ -25,9 +25,9 @@ def compute_dft (matrix: np.ndarray | np.matrix) -> np.matrix:
 	"""
 	Compute the discrete Fourier transform (DFT) of the given matrix.
 	
-	This amounts to left-multiplication with OmegaN and right-mutliplication
-	with OmegaN.H, scaled by 1/n**2, where n is the dimension of the matrix
-	and OmegaN the n-th Fourier matrix as computed by make_Omega(n).
+	This amounts to left-multiplication and right-mutliplication with OmegaN,
+	scaled by 1/n**2, where n is the dimension of the matrix and OmegaN the
+	n-th Fourier matrix as computed by make_Omega(n).
 	
 	The given matrix may contain real or complex values and must be square.
 	The resulting matrix will be of type np.matrix since in general it will
@@ -42,8 +42,30 @@ def compute_dft (matrix: np.ndarray | np.matrix) -> np.matrix:
 		raise ValueError ("Non-square matrices are not supported")
 	
 	Omega = make_Omega (n)
-	OmegaH = Omega.H
-	return (Omega @ matrix @ OmegaH) / n**2
+	return (Omega @ matrix @ Omega) / n**2
+
+def compute_idft (matrix: np.ndarray | np.matrix) -> np.matrix:
+	"""
+	Compute the inverse discrete Fourier transform (IDFT) of the given matrix.
+	
+	This amounts to left-multiplication and right-mutliplication with OmegaN.H,
+	where n is the dimension of the matrix and OmegaN the n-th Fourier matrix
+	as computed by make_Omega(n).
+	
+	The given matrix may contain real or complex values and must be square.
+	The resulting matrix will be of type np.matrix since in general it will
+	contain complex entries.
+	
+	:matrix:  The matrix to apply the IDFT to
+	:returns: The IDFT of the given matrix
+	"""
+	shape = matrix.shape
+	n = shape [0]
+	if n != shape [1]:
+		raise ValueError ("Non-square matrices are not supported")
+	
+	OmegaH = make_Omega (n).H
+	return OmegaH @ matrix @ OmegaH
 
 def compute_dft_8 (matrix: np.ndarray | np.matrix) -> np.matrix:
 	"""
@@ -54,10 +76,29 @@ def compute_dft_8 (matrix: np.ndarray | np.matrix) -> np.matrix:
 	of compute_dft(matrix). The resulting matrix will be of type np.matrix
 	since in general it will contain complex entries.
 	
+	Equivalent to compute_dft but possibly faster for bulk operations.
+	
 	:matrix:  The matrix to apply the DFT to
 	:returns: The DFT of the given matrix
 	"""
 	if matrix.shape != (8, 8):
 		raise ValueError ("Unsupported matrix shape, must be (8,8)!")
 	
-	return (OMEGA8 @ matrix @ OMEGA8H) / 64
+	return (OMEGA8 @ matrix @ OMEGA8) / 64
+
+def compute_idft_8 (matrix: np.ndarray | np.matrix) -> np.matrix:
+	"""
+	Compute the inverse discrete Fourier transform (IDFT) of the given 8x8 matrix.
+	
+	The given matrix may contain real or complex values and must have shape
+	(8,8). Any other shape will be rejected but may be computed by means
+	of compute_idft(matrix). The resulting matrix will be of type np.matrix
+	since in general it will contain complex entries.
+	
+	:matrix:  The matrix to apply the IDFT to
+	:returns: The IDFT of the given matrix
+	"""
+	if matrix.shape != (8, 8):
+		raise ValueError ("Unsupported matrix shape, must be (8,8)!")
+	
+	return OMEGA8H @ matrix @ OMEGA8H
