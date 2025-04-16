@@ -1,5 +1,6 @@
 import numpy as np
 import dct
+import dft
 
 import os
 
@@ -40,6 +41,18 @@ def compute_dct_orth (patch: Image) -> np.ndarray:
 		raise RuntimeError ("Image patch has unsupported dimensions; crop to 8x8 pixels first")
 	
 	return dct.compute_dct_orth (image_to_matrix (patch))
+
+def compute_dft (patch: Image) -> np.ndarray:
+	"""
+	Computes the DFT of the given 8x8 PIL/Pillow image.
+	
+	:patch:   The Pillow image to process, must have size 8x8
+	:returns: An 8x8 NumPy matrix containing the image's DFT coefficients.
+	"""
+	if patch.size != (8, 8):
+		raise RuntimeError ("Image patch has unsupported dimensions; crop to 8x8 pixels first")
+	
+	return dft.compute_dft_8 (image_to_matrix (patch))
 
 def valid_image (im: Image) -> tuple[bool, str]:
 	"""
