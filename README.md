@@ -50,6 +50,11 @@ directly (the former computing the transform by means of a Kronecker product, th
 latter as a similarity transform), and `compute_idct` or `compute_idct_orth` for the
 DCT-III (inverse of the DCT-II).
 
+If `M` is an 8x8 NumPy matrix, calling `dct.compute_dct (M)` or `dct.compute_dct_orth (M)`
+will be equivalent to `scipy.fft.dctn (M, norm="ortho")`, and calling
+`dct.compute_idct (M)` or `dct.compute_idct_orth (M)` will be equivalent to
+`scipy.fft.idctn (M, norm="ortho")`, numerical inaccuracies not withstanding.
+
 Module only, provides no CLI.
 
 ### `ccquad.py`
