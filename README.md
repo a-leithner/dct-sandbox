@@ -2,13 +2,16 @@
 
 This repository compiles some Python snippets created while working on my Bachelor's
 thesis in Mathematics on the discrete cosine transform (DCT). They are by no means
-optimised (e.g., they don't exploit the FFT) and are intended for illustrative
-purposes only.
+optimised (e.g., they don't exploit the FFT) and are intended ***for illustrative
+purposes only.***
 
-An overview of the included modules is given below. Where image files are to be taken
-as an input, they ***MUST*** be in [PGM (portable graymap) format](https://en.wikipedia.org/wiki/Netpbm#File_formats)
-and ***MUST*** have widths and heights divisible by 8. See the example images in
-`images/` for reference.
+An overview of the included modules is given below.
+
+> [!NOTE]
+> Where image files are to be taken as an input, they ***MUST*** be in
+> [PGM (portable graymap) format](https://en.wikipedia.org/wiki/Netpbm#File_formats)
+> and ***MUST*** have widths and heights divisible by 8. See the example images in
+> `images/` for reference.
 
 Converting an image to PGM is as simple as running [ImageMagick](https://imagemagick.org)
 against it:
@@ -22,6 +25,10 @@ The reference images in `images/` have been scaled using ImageMagick, too:
 ```shell
 magick image.pgm -sharpen 0x1.2 -resize 25\% -quality 95 output.pgm
 ```
+
+> [!NOTE]
+> Any claim of exactness or equivalence of methods given regarding this project
+> shall be understood ***up to numerical inaccuracies***.
 
 ## Prerequisites
 
@@ -53,7 +60,7 @@ DCT-III (inverse of the DCT-II).
 If `M` is an 8x8 NumPy matrix, calling `dct.compute_dct (M)` or `dct.compute_dct_orth (M)`
 will be equivalent to `scipy.fft.dctn (M, norm="ortho")`, and calling
 `dct.compute_idct (M)` or `dct.compute_idct_orth (M)` will be equivalent to
-`scipy.fft.idctn (M, norm="ortho")`, numerical inaccuracies notwithstanding.
+`scipy.fft.idctn (M, norm="ortho")`.
 
 Module only, provides no CLI.
 
@@ -85,7 +92,7 @@ of integration, i.e. the order of the highest Chebyshev polynomial to be used
 in the interpolation.
 
 If `f` is a polynomial and `n` fulfills $`n\geq\deg f`$, the integration result
-will be exact (numerical inaccuracies notwithstanding).
+will be exact.
 
 #### `ccquad.chebyshev_interpolation`
 
@@ -100,8 +107,7 @@ which must have domain at least $`[-1, 1]`$, and `n` is the order of interpolati
 i.e. the degree of the last Chebyshev polynomial to use.
 
 The returned callable will compute the value of `f` exactly at the Chebyshev
-extrema of order `n`, that is, at $`\cos(k\pi/n)`$ for $`0\leq k\leq n`$,
-numerical inaccuracies notwithstanding.
+extrema of order `n`, that is, at $`\cos(k\pi/n)`$ for $`0\leq k\leq n`$.
 
 #### `ccquad.chebyshev_sample`
 
@@ -247,11 +253,10 @@ Provides no CLI.
 Provides methods for calculating the [Fourier matrices](https://en.wikipedia.org/wiki/DFT_matrix)
 and for applying the DFT to arbitrary NumPy matrices (which must be square).
 To compute the DFT of a matrix `M`, call `dft.compute_dft (M)`. This will be
-equivalent to `np.fft.fft2 (M, norm="forward")` (numerical inaccuracies
-notwithstanding). To compute the IDFT of a matrix `D`, e.g. to transform
-a DFT-transformed matrix back to its original form, call `dft.compute_idft (D)`.
-This will be equivalent to `np.fft.ifft2 (D, norm="forward")` (numerical
-inaccuracies notwithstanding).
+equivalent to `np.fft.fft2 (M, norm="forward")`. To compute the IDFT of a
+matrix `D`, e.g. to transform a DFT-transformed matrix back to its original
+form, call `dft.compute_idft (D)`. This will be equivalent to
+`np.fft.ifft2 (D, norm="forward")`.
 
 Provides no CLI.
 
