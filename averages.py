@@ -35,7 +35,7 @@ def image_action (width: int, height: int, im: Image) -> None:
 			dft_coeff_total += np.abs(dft_coeffs)
 			
 			dct_coeffs = images.compute_dct_orth (patch)
-			dct_coeff_total += dct_coeffs
+			dct_coeff_total += np.abs(dct_coeffs)
 			
 			index += 1
 			print (f"{index} of {patches}\r", end="", flush=True)

@@ -1,6 +1,7 @@
 import numpy as np
-import matplotlib as mpl
 import matplotlib.pyplot as plt
+
+from matplotlib.ticker import SymmetricalLogLocator
 
 def plot_dct_coefficients (matrix: np.ndarray) -> None:
 	"""
@@ -12,10 +13,10 @@ def plot_dct_coefficients (matrix: np.ndarray) -> None:
 	:matrix: The coefficient matrix to plot
 	"""
 	fig, ax = plt.subplots ()
-	im = ax.imshow (np.abs (matrix), cmap="jet")
-	im.set_clim (0, 2.5)
+	im = ax.imshow (np.abs (matrix), cmap="jet", norm="symlog")
+	im.set_clim (0, 100)
 	im.get_cmap ().set_over (color="w")
-	plt.colorbar(im)
+	plt.colorbar(im, ticks=SymmetricalLogLocator(base=10, linthresh=1, subs=range(10)))
 	
 	ax.axhline (3.5, linestyle='--', color="k")
 	ax.axvline (3.5, linestyle='--', color="k")
