@@ -45,6 +45,11 @@ def image_action (width: int, height: int, im: Image) -> None:
 	# Clear progress indicator
 	print(" " * (len (str (patches)) * 2 + 4))
 
+plot3d = False
+if "--3d" in sys.argv:
+	plot3d = True
+	sys.argv.remove ("--3d")
+
 images.execute_for_all_files (sys.argv [1:], image_action)
 
 if patches_total == 0:
@@ -69,6 +74,10 @@ with np.printoptions (precision=3, suppress=True):
 print ()
 print (f"Total patches: {patches_total}")
 
+plotfunc = plots.plot_dct_coefficients
+if plot3d:
+	plotfunc = plots.plot_dct_coefficients_3d
+
 # Open in Matplotlib windows
-plots.plot_dct_coefficients (dft_coeff_total)
-plots.plot_dct_coefficients (dct_coeff_total)
+plotfunc (dft_coeff_total)
+plotfunc (dct_coeff_total)

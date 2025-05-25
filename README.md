@@ -158,6 +158,10 @@ python3 averages.py image.pgm
 or replace `image.pgm` by an arbitrary number of files to compute the average
 matrix across all files.
 
+Use `--3d` to generate 3D bar plots instead of 2D image plots. This allows
+for easier visualisation of the magnitudes of the coefficients and their
+relationships.
+
 ### `reduce.py`
 
 This module transforms a given image using the DCT-II one 8x8 pixel block at a
